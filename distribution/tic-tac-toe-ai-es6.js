@@ -3,10 +3,18 @@ var AI = (function() {
 
 	function getAIAction(data, analyzeDepth = true){
 		if (!initialization(data, Globals)) {
-			console.log('AI: ai action cannot be returned: invalid data passed to function!');
+			console.log('AI: Action cannot be returned: invalid data passed to function!');
 			return;
 		}
 		return miniMax.calculateValue(Globals.board, Globals.aiCharacter, Globals.aiCharacter, analyzeDepth).move;
+	}
+
+	function getBoardAfterAIMove(data,analyzeDepth=true){
+		if (!initialization(data, Globals)) {
+			console.log('AI: Board cannot be returned: invalid data passed to function!');
+			return;
+		}
+		return miniMax.calculateValue(Globals.board, Globals.aiCharacter, Globals.aiCharacter, analyzeDepth).board;
 	}
 
 	function initialization(data, target) {
@@ -29,7 +37,6 @@ var AI = (function() {
 			console.log('AI: Initialization aborted: board initialization error!');
 			return false;
 		}
-		console.log('AI: Initialization succed!');
 		return true;
 	}
 
@@ -292,6 +299,11 @@ var AI = (function() {
 	})();
 
 	return{
-		getAIAction: getAIAction
+		getAIAction: getAIAction,
+		isTerminate: function(board){
+			return GameTools.isTerminate(board,true);
+		},
+		getStateOfGame: GameTools.isTerminate,
+		getBoardAfterAIMove: getBoardAfterAIMove
 	};
 })();

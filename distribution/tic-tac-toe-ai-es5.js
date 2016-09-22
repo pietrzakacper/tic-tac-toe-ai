@@ -1,6 +1,6 @@
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var AI = function () {
 	var Globals = {};
@@ -9,10 +9,20 @@ var AI = function () {
 		var analyzeDepth = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
 
 		if (!initialization(data, Globals)) {
-			console.log('AI: ai action cannot be returned: invalid data passed to function!');
+			console.log('AI: Action cannot be returned: invalid data passed to function!');
 			return;
 		}
 		return miniMax.calculateValue(Globals.board, Globals.aiCharacter, Globals.aiCharacter, analyzeDepth).move;
+	}
+
+	function getBoardAfterAIMove(data) {
+		var analyzeDepth = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+
+		if (!initialization(data, Globals)) {
+			console.log('AI: Board cannot be returned: invalid data passed to function!');
+			return;
+		}
+		return miniMax.calculateValue(Globals.board, Globals.aiCharacter, Globals.aiCharacter, analyzeDepth).board;
 	}
 
 	function initialization(data, target) {
@@ -35,7 +45,6 @@ var AI = function () {
 			console.log('AI: Initialization aborted: board initialization error!');
 			return false;
 		}
-		console.log('AI: Initialization succed!');
 		return true;
 	}
 
@@ -305,6 +314,11 @@ var AI = function () {
 	}();
 
 	return {
-		getAIAction: getAIAction
+		getAIAction: getAIAction,
+		isTerminate: function isTerminate(board) {
+			return GameTools.isTerminate(board, true);
+		},
+		getStateOfGame: GameTools.isTerminate,
+		getBoardAfterAIMove: getBoardAfterAIMove
 	};
 }();
