@@ -1,23 +1,28 @@
-const initialization = require('./init.js');
-const minmax = require('./minimax.js').miniMax;
-var AI = {Globals:{}};
+var AI = (function() {
+	var Globals = {};
 
-
-AI.dataTemplate = {
-	aiCharacter: 'o',
-	playerCharacter: 'x',
-	startingCharacter: 'o',
-	board: ['e','e','e',
-					'e','e','e',
-					'e','e','e']
-};
-
-AI.getAIAction = (data, analyzeDepth = true)=>{
-	if(!initialization.assignData(data, AI.Globals)){
-		console.log('AI: ai action cannot be returned: invalid data passed to function!');
-		return;
+	function getAIAction(data, analyzeDepth = true){
+		if (!initialization(data, Globals)) {
+			console.log('AI: Action cannot be returned: invalid data passed to function!');
+			return;
+		}
+		return miniMax.calculateValue(Globals.board, Globals.aiCharacter, Globals.aiCharacter, analyzeDepth).move;
 	}
-	console.log(minmax(AI.Globals.board, AI.Globals.aiCharacter, AI.Globals.aiCharacter, analyzeDepth).move);
-};
 
-AI.getAIAction(AI.dataTemplate);
+	function getBoardAfterAIMove(data,analyzeDepth=true){
+		if (!initialization(data, Globals)) {
+			console.log('AI: Board cannot be returned: invalid data passed to function!');
+			return;
+		}
+		return miniMax.calculateValue(Globals.board, Globals.aiCharacter, Globals.aiCharacter, analyzeDepth).board;
+	}
+	
+	return{
+		getAIAction: getAIAction,
+		isTerminate: function(board){
+			return GameTools.isTerminate(board,true);
+		},
+		getStateOfGame: GameTools.isTerminate,
+		getBoardAfterAIMove: getBoardAfterAIMove
+	};
+})();
