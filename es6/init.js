@@ -11,6 +11,11 @@ exports.assignData = (data, target)=>{
 		return false;
 	}
 
+	if(!(target.startingCharacter = validation.startingCharacter(data.startingCharacter))){
+		console.log('AI: Initialization aborted: Starting character initialization error!');
+		return false;
+	}
+
 	if(!(target.board = validation.board(data.board, data.startingCharacter, data.aiCharacter))){
 		console.log('AI: Initialization aborted: board initialization error!');
 		return false;
