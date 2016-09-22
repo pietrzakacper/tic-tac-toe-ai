@@ -1,4 +1,5 @@
-var Validation = (function() {
+var AI = (function(module){
+module.Validation = (function() {
 		var aiCharacter = character => {
 			if (typeof character === 'undefined') {
 				console.log('AI ERROR: ai character is undefined!');
@@ -88,7 +89,7 @@ var Validation = (function() {
 				return false;
 			}
 
-			if (GameTools.isTerminate(board, true)) {
+			if (module.GameTools.isTerminated(board, true)) {
 				console.log('AI ERROR: Given board represents terminated game!');
 				return false;
 			}
@@ -125,3 +126,5 @@ var Validation = (function() {
 		};
 
 	})();
+	return module;
+})(AI || {});

@@ -1,16 +1,17 @@
-var miniMax = (function() {
+var AI = (function(module){
+	module.miniMax = (function() {
 		var calculateValue = (board, character, aiCharacter, analyzeDepth, depth = 0) => {
-			const isTerminateMsg = GameTools.isTerminate(board);
-			if (isTerminateMsg !== 'not-end') {
-				const tmpAction = new Action(-1);
-				tmpAction.score = GameTools.getGameScore(isTerminateMsg, aiCharacter, depth);
+			const isTerminatedMsg = module.GameTools.isTerminated(board);
+			if (isTerminatedMsg !== 'not-end') {
+				const tmpAction = new module.Action(-1);
+				tmpAction.score = module.GameTools.getGameScore(isTerminatedMsg, aiCharacter, depth);
 				return tmpAction;
 			}
-			const possibleMoves = GameTools.getAllMoves(board);
+			const possibleMoves = module.GameTools.getAllMoves(board);
 			const actions = [];
 			possibleMoves.forEach(move => {
-				const action = new Action(move);
-				action.board = GameTools.getBoardAfterSimulatedMove(board, move, character);
+				const action = new module.Action(move);
+				action.board = module.GameTools.getBoardAfterSimulatedMove(board, move, character);
 				action.score = calculateValue(action.board, (character === 'x') ? 'o' : 'x', aiCharacter, analyzeDepth, (analyzeDepth) ? depth + 1 : 0).score;
 				actions.push(action);
 			});
@@ -32,3 +33,5 @@ var miniMax = (function() {
 			calculateValue: calculateValue
 		};
 	})();
+	return module;
+})(AI || {});

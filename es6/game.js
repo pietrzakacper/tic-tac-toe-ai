@@ -1,5 +1,6 @@
-var GameTools = (function() {
-		var isTerminate = (board, onlyBoolean = false)=> {
+var AI = (function(module){
+module.GameTools = (function() {
+		var isTerminated = (board, onlyBoolean = false)=> {
 			const chars = ['x', 'o'];
 			for (let i = 0; i < 2; ++i) {
 				if (hasWon(chars[i], board)) {
@@ -78,9 +79,11 @@ var GameTools = (function() {
 		};
 
 		return {
-			isTerminate: isTerminate,
+			isTerminated: isTerminated,
 			getGameScore: getGameScore,
 			getAllMoves: getAllMoves,
 			getBoardAfterSimulatedMove: getBoardAfterSimulatedMove
 		};
 	})();
+	return module;
+})(AI||{});
