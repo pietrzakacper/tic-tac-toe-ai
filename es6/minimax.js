@@ -1,49 +1,34 @@
-exports.miniMax = miniMax;
+var miniMax = (function() {
+		var calculateValue = (board, character, aiCharacter, analyzeDepth, depth = 0) => {
+			const isTerminateMsg = GameTools.isTerminate(board);
+			if (isTerminateMsg !== 'not-end') {
+				const tmpAction = new Action(-1);
+				tmpAction.score = GameTools.getGameScore(isTerminateMsg, aiCharacter, depth);
+				return tmpAction;
+			}
+			const possibleMoves = GameTools.getAllMoves(board);
+			const actions = [];
+			possibleMoves.forEach(move => {
+				const action = new Action(move);
+				action.board = GameTools.getBoardAfterSimulatedMove(board, move, character);
+				action.score = calculateValue(action.board, (character === 'x') ? 'o' : 'x', aiCharacter, analyzeDepth, (analyzeDepth) ? depth + 1 : 0).score;
+				actions.push(action);
+			});
 
-const game = require('./game.js');
-const Action = require('./action.js').Action;
+			if (character === aiCharacter) {
+				actions.sort(ACTION_ASCENDING);
+			} else {
+				actions.sort(ACTION_DESCENDING);
+			}
 
-function miniMax(board, character, aiCharacter,analyzeDepth, depth=0) {
-	const isTerminateMsg = game.isTerminate(board);
-	if (isTerminateMsg !== 'not-end') {
-		const tmpAction = new Action(-1);
-		tmpAction.score = game.getGameScore(isTerminateMsg, aiCharacter,depth);
-		return tmpAction;
-	}
-	const possibleMoves = game.getAllMoves(board);
-	const actions = [];
-	possibleMoves.forEach(move => {
-		const action = new Action(move);
-		action.board=getBoardAfterSimulatedMove(board, move, character);
-		action.score = miniMax(action.board, (character === 'x') ? 'o' : 'x', aiCharacter,analyzeDepth,(analyzeDepth)?depth+1:0).score;
-		actions.push(action);
-	});
+			return actions[0];
+		};
 
-	if (character === aiCharacter) {
-		actions.sort(ACTION_ASCENDING);
-	} else {
-		actions.sort(ACTION_DESCENDING);
-	}
+		var ACTION_ASCENDING = (a, b) => b.score - a.score;
 
-	return actions[0];
-}
+		var ACTION_DESCENDING = (a, b) => a.score - b.score;
 
-function getBoardAfterSimulatedMove(board, pos, char) {
-	const newBoard = [];
-	board.forEach((val) => {
-		newBoard.push(val);
-	});
-
-	newBoard[pos] = char;
-	return newBoard;
-}
-
-function ACTION_ASCENDING(a, b) {
-
-	return b.score - a.score;
-}
-
-function ACTION_DESCENDING(a, b) {
-
-	return a.score - b.score;
-}
+		return {
+			calculateValue: calculateValue
+		};
+	})();

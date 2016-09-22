@@ -1,120 +1,127 @@
-const isTerminate = require('./game.js').isTerminate;
+var Validation = (function() {
+		var aiCharacter = character => {
+			if (typeof character === 'undefined') {
+				console.log('AI ERROR: ai character is undefined!');
+				return false;
+			}
 
+			character = character.toLowerCase();
 
-exports.aiCharacter = character => {
-	if (typeof character === 'undefined') {
-		console.log('AI ERROR: ai character is undefined!');
-		return false;
-	}
+			if (character !== 'x' && character !== 'o') {
+				console.log(`AI ERROR: '${character}' is not valid ai character!`);
+				return false;
+			}
+			return character;
+		};
 
-	character = character.toLowerCase();
+		var playerCharacter = (character, aiCharacter) => {
+			if (typeof character === 'undefined') {
+				console.log('AI ERROR: player character is undefined!');
+				return false;
+			}
 
-	if (character !== 'x' && character !== 'o') {
-		console.log(`AI ERROR: '${character}' is not valid ai character!`);
-		return false;
-	}
-	return character;
-};
+			character = character.toLowerCase();
 
-exports.playerCharacter = (character, aiCharacter) => {
-	if (typeof character === 'undefined') {
-		console.log('AI ERROR: player character is undefined!');
-		return false;
-	}
+			if (character !== 'x' && character !== 'o') {
+				console.log(`AI ERROR: '${character}' is not valid player character!`);
+				return false;
+			}
+			if (character === aiCharacter) {
+				console.log(`AI ERROR: Player character '${character}' cannot be the same as ai character '${aiCharacter}' !`);
+				return false;
+			}
+			return character;
+		};
 
-	character = character.toLowerCase();
+		var startingCharacter = character => {
+			if (typeof character === 'undefined') {
+				console.log('AI ERROR: starting character is undefined!');
+				return false;
+			}
 
-	if (character !== 'x' && character !== 'o') {
-		console.log(`AI ERROR: '${character}' is not valid player character!`);
-		return false;
-	}
-	if (character === aiCharacter) {
-		console.log(`AI ERROR: Player character '${character}' cannot be the same as ai character '${aiCharacter}' !`);
-		return false;
-	}
-	return character;
-};
+			character = character.toLowerCase();
 
-exports.startingCharacter = character => {
-	if (typeof character === 'undefined') {
-		console.log('AI ERROR: starting character is undefined!');
-		return false;
-	}
+			if (character !== 'x' && character !== 'o') {
+				console.log(`AI ERROR: '${character}' is not valid starting character!`);
+				return false;
+			}
+			return character;
+		};
 
-	character = character.toLowerCase();
+		var board = (board, startingCharacter, aiCharacter) => {
+			if (typeof board === 'undefined') {
+				console.log('AI ERROR: board is not defined');
+				return false;
+			}
 
-	if (character !== 'x' && character !== 'o') {
-		console.log(`AI ERROR: '${character}' is not valid starting character!`);
-		return false;
-	}
-	return character;
-};
+			if (!Array.isArray(board)) {
+				console.log('AI ERROR: passed board argument is not type of array');
+				return false;
+			}
 
-exports.board = (board, startingCharacter, aiCharacter) => {
-	if (typeof board === 'undefined') {
-		console.log('AI ERROR: board is not defined');
-		return false;
-	}
+			if (board.length !== 9) {
+				console.log(`AI ERROR: length of board array is not valid, expected value is 9, given value is ${board.length}`);
+				return false;
+			}
 
-	if (!Array.isArray(board)) {
-		console.log('AI ERROR: passed board argument is not type of array');
-		return false;
-	}
+			board.forEach((value, index) => {
+				board[index] = value.toLowerCase();
+			});
 
-	if (board.length !== 9) {
-		console.log(`AI ERROR: length of board array is not valid, expected value is 9, given value is ${board.length}`);
-		return false;
-	}
+			if (containsInvalidCharacters(board)) {
+				console.log('AI ERROR: board array contains invalid character !');
+				return false;
+			}
+			const aiMoves = countOccurences(board, aiCharacter);
+			const playerMoves = countOccurences(board, (aiCharacter === 'o') ? 'x' : 'o');
 
-	board.forEach((value, index) => {
-		board[index] = value.toLowerCase();
-	});
+			if (aiMoves > playerMoves || (aiMoves === playerMoves && startingCharacter !== aiCharacter)) {
+				console.log('AI ERROR: It is not ai\'s turn!');
+				return false;
+			}
+			if (playerMoves > aiMoves && startingCharacter === aiCharacter) {
+				console.log('AI ERROR: Given board contains too few ai\' moves');
+				return false;
+			}
+			if (playerMoves - 1 > aiMoves) {
+				console.log('AI ERROR: Given board contains too few player\' moves');
+				return false;
+			}
 
-	if (containsInvalidCharacters(board)) {
-		console.log('AI ERROR: board array contains invalid character !');
-		return false;
-	}
-	const aiMoves = countOccurences(board, aiCharacter);
-	const playerMoves = countOccurences(board, (aiCharacter === 'o') ? 'x' : 'o');
+			if (GameTools.isTerminate(board, true)) {
+				console.log('AI ERROR: Given board represents terminated game!');
+				return false;
+			}
 
-	if (aiMoves > playerMoves || (aiMoves === playerMoves && startingCharacter !== aiCharacter)) {
-		console.log('AI ERROR: It is not ai\'s turn!');
-		return false;
-	}
-	if (playerMoves > aiMoves && startingCharacter === aiCharacter) {
-		console.log('AI ERROR: Given board contains too few ai\' moves');
-		return false;
-	}
-	if (playerMoves - 1 > aiMoves) {
-		console.log('AI ERROR: Given board contains too few player\' moves');
-		return false;
-	}
+			return board;
+		};
 
-	if (isTerminate(board,true)) {
-		console.log('AI ERROR: Given board represents terminated game!');
-		return false;
-	}
+		var containsInvalidCharacters = (board) => {
+			let contains = false;
 
-	return board;
-};
+			board.forEach((value) => {
+				if (value !== 'e' && value !== 'x' && value !== 'o') {
+					contains = true;
+				}
+			});
 
-function containsInvalidCharacters(board) {
-	let contains = false;
+			return contains;
+		};
 
-	board.forEach((value) => {
-		if (value !== 'e' && value !== 'x' && value !== 'o') {
-			contains = true;
-		}
-	});
+		var countOccurences = (board, character) => {
+			return board.reduce((previousValue, currentValue) => {
+				if (currentValue === character) {
+					return ++previousValue;
+				}
+				return previousValue;
+			}, 0);
+		};
 
-	return contains;
-}
+		return {
+			aiCharacter:aiCharacter,
+			playerCharacter:playerCharacter,
+			startingCharacter:startingCharacter,
+			board: board
+		};
 
-function countOccurences(board, character) {
-	return board.reduce((previousValue, currentValue) => {
-		if (currentValue === character) {
-			return ++previousValue;
-		}
-		return previousValue;
-	}, 0);
-}
+	})();
