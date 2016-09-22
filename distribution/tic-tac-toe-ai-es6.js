@@ -180,7 +180,7 @@ var AI = (function() {
 				}
 			}
 
-			for (let i = 0; i < 8; ++i) {
+			for (let i = 0; i < 9; ++i) {
 				if (board[i] === 'e') {
 					if (onlyBoolean) {
 						return false;

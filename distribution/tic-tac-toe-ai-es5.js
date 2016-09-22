@@ -1,6 +1,6 @@
 'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var AI = function () {
 	var Globals = {};
@@ -189,7 +189,7 @@ var AI = function () {
 				}
 			}
 
-			for (var _i = 0; _i < 8; ++_i) {
+			for (var _i = 0; _i < 9; ++_i) {
 				if (board[_i] === 'e') {
 					if (onlyBoolean) {
 						return false;
