@@ -4,14 +4,14 @@ Simple library based on [Minimax](https://en.wikipedia.org/wiki/Minimax) algorit
 * Best move based on current board state
 * Board state after AI move
 * Checking whether game is over
-* Information abour current game state
+* Information about current game state
 
 ### Usage Examples:
-Standard data format, used to exchange information about current game state. 
+Standard data format, used to exchange information about current game state.
 Board property is one-dimensional array which consists of field characters: *[ 'x', 'o', 'e']*. **'e'** stands for empty field. 0th index of board array coresponds to left-top field, 1st index corresponds to center-top field and so on...
 ``` javascript
-const data = {
-    aiCharacter: 'o',
+var data = {
+  aiCharacter: 'o',
 	playerCharacter: 'x',
 	startingCharacter: 'x',
 	board: ['e','e','o',
@@ -29,23 +29,23 @@ representing board state after AI movement;
 ``` javascript
 AI.getBoardAfterAIMove(data);
 //returns [ 'o', 'e', 'o',
-//          'x', 'e', 'e', 
+//          'x', 'e', 'e',
 //          'e', 'x', 'e' ]
 ```
 Whenever it is needed to check  whether game is finished, ```isTerminated(board)``` can be called. This function returns  ***true*** or ***false***, depending on passed board state.
 ```javascript
 AI.isTerminated(data.board); //returns false
 
-const newBoard = ['x','e','o',
-                  'e','o','x',
-                  'o','x','o' ];
+var newBoard = ['x','e','o',
+                'e','o','x',
+                'o','x','o' ];
 
 AI.isTerminated(newBoard); //returns true
 ```
-Another way to check whether game is finished, is calling ```getStateOfGame(board)```. This time, more specific result is provided. This function can return one, out of four values: **'x-won'**, **'o-won'**, **'draw'** and **'not-end'**. 
+Another way to check whether game is finished, is calling ```getStateOfGame(board)```. This time, more specific result is provided. This function can return one, out of four values: **'x-won'**, **'o-won'**, **'draw'** and **'not-end'**.
 ```javascript
-const currentGameState = AI.getStateOfGame(data.board);
-if(currentGameState === `${data.aiCharacter}-won`){
+var currentGameState = AI.getStateOfGame(data.board);
+if(currentGameState === data.aiCharacter} + '-won'){
     //show 'YOU LOST!' on screen
 }
 ```
@@ -56,4 +56,4 @@ If you want to use this library in browser environment, simply download minified
 
 ## License
 
-The plugin is licensed under [MIT license](https://opensource.org/licenses/MIT).
+The project is licensed under [MIT license](https://opensource.org/licenses/MIT).
