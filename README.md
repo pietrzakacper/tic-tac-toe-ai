@@ -11,7 +11,7 @@ Standard data format, used to exchange information about current game state.
 Board property is one-dimensional array which consists of field characters: *[ 'x', 'o', 'e']*. **'e'** stands for empty field. 0th index of board array coresponds to left-top field, 1st index corresponds to center-top field and so on...
 ``` javascript
 var data = {
-  aiCharacter: 'o',
+  	aiCharacter: 'o',
 	playerCharacter: 'x',
 	startingCharacter: 'x',
 	board: ['e','e','o',
