@@ -1,28 +1,24 @@
 var AI = (function(module) {
-	var Globals = {};
+	var init = module.initialization;
+	var minimax = module.miniMax.calculateValue;
 
-	function getAIAction(data, analyzeDepth = true){
-		if (!module.initialization(data, Globals)) {
+	function getAIAction(data) {
+		var checkedData = {};
+		if (!init(data, checkedData)) {
 			console.log('AI: Action cannot be returned: invalid data passed to function!');
 			return;
 		}
-		return module.miniMax.calculateValue(Globals.board, Globals.aiCharacter, Globals.aiCharacter, analyzeDepth).move;
+		return minimax(checkedData.board, checkedData.aiCharacter, checkedData.aiCharacter, 0);
 	}
 
-	function getBoardAfterAIMove(data,analyzeDepth=true){
-		if (!module.initialization(data, Globals)) {
-			console.log('AI: Board cannot be returned: invalid data passed to function!');
-			return;
-		}
-		return module.miniMax.calculateValue(Globals.board, Globals.aiCharacter, Globals.aiCharacter, analyzeDepth).board;
-	}
-	
-	return{
-		getAIAction: getAIAction,
-		isTerminated: function(board){
-			return module.GameTools.isTerminated(board,true);
+	return {
+		getAIMove: function(data){
+			return (getAIAction(data)).move;
 		},
-		getStateOfGame: module.GameTools.isTerminated,
-		getBoardAfterAIMove: getBoardAfterAIMove
+		getBoardAfterAIMove: function(data){
+			return (getAIAction(data)).board;
+		},
+		isTerminated: module.GameTools.isTerminated,
+		getStateOfGame: module.GameTools.getStateOfGame
 	};
-})(AI||{});
+})(AI || {});

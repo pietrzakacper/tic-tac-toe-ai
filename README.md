@@ -19,12 +19,12 @@ var data = {
 			'e','x','e']
 };
 ```
-The most basic usage of this library is getting the best move, based on current board state. This can be achieved be simply calling ```getAIAction(data [, analyzeDepth = true])```. This function returns index of board array which reporesents AI's move.
+The most basic usage of this library is getting the best move, based on current board state. This can be achieved be simply calling ```getAIMove(data)```. This function returns index of board array which reporesents AI's move.
 
 ``` javascript
-AI.getAIAction(data); //returns 0;
+AI.getAIMove(data); //returns 0;
 ```
-In certain situations, more convenient thing to do, would be calling ```getBoardAfterAIMove(data [, analyzeDepth = true])``` . This function returns array
+In certain situations, more convenient thing to do, would be calling ```getBoardAfterAIMove(data)``` . This function returns array
 representing board state after AI movement;
 ``` javascript
 AI.getBoardAfterAIMove(data);
