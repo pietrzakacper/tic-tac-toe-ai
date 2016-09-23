@@ -1,6 +1,6 @@
 var AI = (function(module){
-module.Validation = (function() {
-		var aiCharacter = character => {
+	module.Validation = (function() {
+		function aiCharacter(character){
 			if (typeof character === 'undefined') {
 				console.log('AI ERROR: ai character is undefined!');
 				return false;
@@ -9,13 +9,13 @@ module.Validation = (function() {
 			character = character.toLowerCase();
 
 			if (character !== 'x' && character !== 'o') {
-				console.log(`AI ERROR: '${character}' is not valid ai character!`);
+				console.log('AI ERROR: ' + character + ' is not valid ai character!');
 				return false;
 			}
 			return character;
-		};
+		}
 
-		var playerCharacter = (character, aiCharacter) => {
+		function playerCharacter(character, aiCharacter){
 			if (typeof character === 'undefined') {
 				console.log('AI ERROR: player character is undefined!');
 				return false;
@@ -24,17 +24,17 @@ module.Validation = (function() {
 			character = character.toLowerCase();
 
 			if (character !== 'x' && character !== 'o') {
-				console.log(`AI ERROR: '${character}' is not valid player character!`);
+				console.log('AI ERROR: ' + character + ' is not valid player character!');
 				return false;
 			}
 			if (character === aiCharacter) {
-				console.log(`AI ERROR: Player character '${character}' cannot be the same as ai character '${aiCharacter}' !`);
+				console.log('AI ERROR: Player character' + character + ' cannot be the same as ai character ' + aiCharacter + '!');
 				return false;
 			}
 			return character;
-		};
+		}
 
-		var startingCharacter = character => {
+		function startingCharacter(character){
 			if (typeof character === 'undefined') {
 				console.log('AI ERROR: starting character is undefined!');
 				return false;
@@ -43,13 +43,13 @@ module.Validation = (function() {
 			character = character.toLowerCase();
 
 			if (character !== 'x' && character !== 'o') {
-				console.log(`AI ERROR: '${character}' is not valid starting character!`);
+				console.log('AI ERROR: '+character+' is not valid starting character!');
 				return false;
 			}
 			return character;
-		};
+		}
 
-		var board = (board, startingCharacter, aiCharacter) => {
+		function board(board, startingCharacter, aiCharacter){
 			if (typeof board === 'undefined') {
 				console.log('AI ERROR: board is not defined');
 				return false;
@@ -61,11 +61,11 @@ module.Validation = (function() {
 			}
 
 			if (board.length !== 9) {
-				console.log(`AI ERROR: length of board array is not valid, expected value is 9, given value is ${board.length}`);
+				console.log('AI ERROR: length of board array is not valid, expected value is 9, given value\'s length is ' + board.length);
 				return false;
 			}
 
-			board.forEach((value, index) => {
+			board.forEach(function(value, index){
 				board[index] = value.toLowerCase();
 			});
 
@@ -73,8 +73,8 @@ module.Validation = (function() {
 				console.log('AI ERROR: board array contains invalid character !');
 				return false;
 			}
-			const aiMoves = countOccurences(board, aiCharacter);
-			const playerMoves = countOccurences(board, (aiCharacter === 'o') ? 'x' : 'o');
+			var aiMoves = countOccurences(board, aiCharacter);
+			var playerMoves = countOccurences(board, (aiCharacter === 'o') ? 'x' : 'o');
 
 			if (aiMoves > playerMoves || (aiMoves === playerMoves && startingCharacter !== aiCharacter)) {
 				console.log('AI ERROR: It is not ai\'s turn!');
@@ -89,34 +89,31 @@ module.Validation = (function() {
 				return false;
 			}
 
-			if (module.GameTools.isTerminated(board, true)) {
+			if (module.GameTools.isTerminated(board)) {
 				console.log('AI ERROR: Given board represents terminated game!');
 				return false;
 			}
 
 			return board;
-		};
+		}
 
-		var containsInvalidCharacters = (board) => {
-			let contains = false;
+		function containsInvalidCharacters(board){
+			var contains = false;
 
-			board.forEach((value) => {
+			board.forEach(function(value){
 				if (value !== 'e' && value !== 'x' && value !== 'o') {
 					contains = true;
 				}
 			});
 
 			return contains;
-		};
+		}
 
-		var countOccurences = (board, character) => {
-			return board.reduce((previousValue, currentValue) => {
-				if (currentValue === character) {
-					return ++previousValue;
-				}
-				return previousValue;
+		function countOccurences(board, character){
+			return board.reduce(function(previousValue, currentValue){
+				return currentValue === character ? ++previousValue : previousValue;
 			}, 0);
-		};
+		}
 
 		return {
 			aiCharacter:aiCharacter,

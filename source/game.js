@@ -1,84 +1,81 @@
-var AI = (function(module){
-module.GameTools = (function() {
-		var isTerminated = (board, onlyBoolean = false)=> {
-			const chars = ['x', 'o'];
-			for (let i = 0; i < 2; ++i) {
-				if (hasWon(chars[i], board)) {
-					if (onlyBoolean) {
-						return true;
-					}
-					return `${chars[i]}-won`;
+var AI = (function(module) {
+	module.GameTools = (function() {
+
+		function isTerminated(board) {
+			return (getStateOfGame(board) === 'not-end')? false : true;
+		}
+
+		function getStateOfGame(board){
+			var characters = ['x', 'o'];
+			//check if one of players won
+			for (var i = 0; i < 2; ++i) {
+				if (hasWon(characters[i], board)) {
+					return characters[i] + '-won';
 				}
 			}
-
-			for (let i = 0; i < 9; ++i) {
+			//check if there are stil empty fields left
+			for (var i = 0; i < 9; ++i) {
 				if (board[i] === 'e') {
-					if (onlyBoolean) {
-						return false;
-					}
 					return 'not-end';
 				}
 			}
-			if (onlyBoolean) {
-				return true;
-			}
+			//if not, it must be a draw
 			return 'draw';
-		};
+		}
 
-		var getGameScore=(msg, aiCharacter, depth)=> {
-			if (msg === `${aiCharacter}-won`) {
+		function getGameScore(msg, aiCharacter, depth) {
+			if (msg === aiCharacter + '-won') {
 				return 10 - depth;
 			} else if (msg === 'draw') {
 				return 0;
 			}
 			return depth - 10;
-		};
+		}
 
-		var getAllMoves = (board)=>{
-			const possibleMoves = [];
+		function getAllMoves(board) {
+			var possibleMoves = [];
 
-			board.forEach((value, index) => {
+			board.forEach(function(value, index) {
 				if (value === 'e') {
 					possibleMoves.push(index);
 				}
 			});
 
 			return possibleMoves;
-		};
+		}
 
-		var hasWon = (char, board) => {
-			for (let i = 0; i < 3; ++i) {
+		function hasWon(char, board) {
+			//check columns
+			for (var i = 0; i < 3; ++i) {
 				if (char === board[i] && char === board[i + 3] && char === board[i + 6]) {
 					return true;
 				}
 			}
 
-			for (let i = 0; i <= 6; i += 3) {
+			//check rows
+			for (var i = 0; i <= 6; i += 3) {
 				if (char === board[i] && char === board[i + 1] && char === board[i + 2]) {
 					return true;
 				}
 			}
 
-			if (char === board[0] && char === board[4] && char == board[8]) {
+			//check diagonals
+			if ((char === board[0] && char === board[4] && char == board[8]) ||
+				(char === board[2] && char === board[4] && char == board[6])) {
 				return true;
 			}
-			if (char === board[2] && char === board[4] && char == board[6]) {
-				return true;
-			}
+
 			return false;
-		};
+		}
 
-		var getBoardAfterSimulatedMove = (board, pos, char)=> {
-			const newBoard = [];
-			board.forEach((val) => {
-				newBoard.push(val);
-			});
-
+		function getBoardAfterSimulatedMove(board, pos, char){
+			var newBoard = board.slice();
 			newBoard[pos] = char;
 			return newBoard;
-		};
+		}
 
 		return {
+			getStateOfGame: getStateOfGame,
 			isTerminated: isTerminated,
 			getGameScore: getGameScore,
 			getAllMoves: getAllMoves,
@@ -86,4 +83,4 @@ module.GameTools = (function() {
 		};
 	})();
 	return module;
-})(AI||{});
+})(AI || {});
