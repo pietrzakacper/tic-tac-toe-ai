@@ -2,7 +2,7 @@ var AI = (function(module) {
 	var valid = module.Validation;
 
 	module.initialization = function(data, target) {
-		for (var key in data) {
+		for (var key in valid) {
 			if (data.hasOwnProperty(key)) {
 				if (!(target[key] = valid[key](data))) {
 					console.log('AI: Initialization aborted: ' + key + ' initialization error!');
