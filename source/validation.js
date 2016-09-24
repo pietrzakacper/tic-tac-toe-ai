@@ -1,60 +1,27 @@
-var AI = (function(module){
+var AI = (function(module) {
 	module.Validation = (function() {
-		function aiCharacter(character){
-			if (typeof character === 'undefined') {
-				console.log('AI ERROR: ai character is undefined!');
-				return false;
-			}
 
+		function gameCharacter(character, name) {
 			character = character.toLowerCase();
 
 			if (character !== 'x' && character !== 'o') {
-				console.log('AI ERROR: ' + character + ' is not valid ai character!');
+				console.log('AI ERROR: ' + character + ' is not valid ' + name + ' character!');
 				return false;
 			}
 			return character;
 		}
 
-		function playerCharacter(character, aiCharacter){
-			if (typeof character === 'undefined') {
-				console.log('AI ERROR: player character is undefined!');
-				return false;
-			}
+		function playerCharacter(character, aiCharacter) {
+			var afterValid = gameCharacter(character, 'ai');
 
-			character = character.toLowerCase();
-
-			if (character !== 'x' && character !== 'o') {
-				console.log('AI ERROR: ' + character + ' is not valid player character!');
-				return false;
-			}
-			if (character === aiCharacter) {
+			if (afterValid === aiCharacter) {
 				console.log('AI ERROR: Player character' + character + ' cannot be the same as ai character ' + aiCharacter + '!');
 				return false;
 			}
-			return character;
+			return afterValid;
 		}
 
-		function startingCharacter(character){
-			if (typeof character === 'undefined') {
-				console.log('AI ERROR: starting character is undefined!');
-				return false;
-			}
-
-			character = character.toLowerCase();
-
-			if (character !== 'x' && character !== 'o') {
-				console.log('AI ERROR: '+character+' is not valid starting character!');
-				return false;
-			}
-			return character;
-		}
-
-		function board(board, startingCharacter, aiCharacter){
-			if (typeof board === 'undefined') {
-				console.log('AI ERROR: board is not defined');
-				return false;
-			}
-
+		function board(board, startingCharacter, aiCharacter) {
 			if (!Array.isArray(board)) {
 				console.log('AI ERROR: passed board argument is not type of array');
 				return false;
@@ -65,7 +32,7 @@ var AI = (function(module){
 				return false;
 			}
 
-			board.forEach(function(value, index){
+			board.forEach(function(value, index) {
 				board[index] = value.toLowerCase();
 			});
 
@@ -97,10 +64,10 @@ var AI = (function(module){
 			return board;
 		}
 
-		function containsInvalidCharacters(board){
+		function containsInvalidCharacters(board) {
 			var contains = false;
 
-			board.forEach(function(value){
+			board.forEach(function(value) {
 				if (value !== 'e' && value !== 'x' && value !== 'o') {
 					contains = true;
 				}
@@ -109,17 +76,25 @@ var AI = (function(module){
 			return contains;
 		}
 
-		function countOccurences(board, character){
-			return board.reduce(function(previousValue, currentValue){
-				return currentValue === character ? ++previousValue : previousValue;
+		function countOccurences(board, character) {
+			return board.reduce(function(previousValue, currentValue) {
+				return currentValue === character ? previousValue + 1 : previousValue;
 			}, 0);
 		}
 
 		return {
-			aiCharacter:aiCharacter,
-			playerCharacter:playerCharacter,
-			startingCharacter:startingCharacter,
-			board: board
+			aiCharacter: function(data) {
+				return gameCharacter(data.aiCharacter, 'ai');
+			},
+			playerCharacter: function(data) {
+				return playerCharacter(data.playerCharacter, data.aiCharacter);
+			},
+			startingCharacter: function(data) {
+				return gameCharacter(data.startingCharacter, 'starting');
+			},
+			board: function(data) {
+				return board(data.board, data.startingCharacter, data.aiCharacter);
+			}
 		};
 
 	})();

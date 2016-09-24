@@ -3,4 +3,4 @@ gulpfile.js
 package.json
 .babelrc
 .eslintrc.json
-*.html
+**/*.html
