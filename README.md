@@ -45,7 +45,7 @@ AI.isTerminated(newBoard); //returns true
 Another way to check whether game is finished, is calling ```getStateOfGame(board)```. This time, more specific result is provided. This function can return one, out of four values: **'x-won'**, **'o-won'**, **'draw'** and **'not-end'**.
 ```javascript
 var currentGameState = AI.getStateOfGame(data.board);
-if(currentGameState === data.aiCharacter} + '-won'){
+if(currentGameState === data.aiCharacter + '-won'){
     //show 'YOU LOST!' on screen
 }
 ```
