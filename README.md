@@ -1,5 +1,5 @@
 # Tic Tac Toe AI
-Simple library based on [Minimax](https://en.wikipedia.org/wiki/Minimax) algorithm that provides useful API in developing tic-tac-toe games.
+Simple library based on [Minimax](https://en.wikipedia.org/wiki/Minimax) algorithm that provides useful API in developing tic-tac-toe games. Go ahead and see it in action: [Tic Tac Toe](https://pietrzakacper.github.io/TicTacToe/).
 ### Features available:
 * Best move based on current board state
 * Board state after AI move
@@ -7,7 +7,7 @@ Simple library based on [Minimax](https://en.wikipedia.org/wiki/Minimax) algorit
 * Information about current game state
 
 ### Usage Examples:
-Standard data format, used to exchange information about current game state.
+This is standard data format, used to exchange information about current game state.
 Board property is one-dimensional array which consists of field characters: *[ 'x', 'o', 'e']*. **'e'** stands for empty field. 0th index of board array coresponds to left-top field, 1st index corresponds to center-top field and so on...
 ``` javascript
 var data = {
