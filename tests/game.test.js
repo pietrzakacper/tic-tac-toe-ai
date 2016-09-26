@@ -1,5 +1,5 @@
 const test = require('tape').test;
-import GameTools from '../source/game';
+import * as GameTools from '../source/game';
 
 test('The getStateOfGame method', function(t) {
 	let board = ['e', 'e', 'e',

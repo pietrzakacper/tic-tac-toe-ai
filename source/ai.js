@@ -1,6 +1,6 @@
 import init from './init';
 import minimax from './minimax';
-import GameTools from './game';
+import {isTerminated,getStateOfGame} from './game';
 
 
 function getAIAction(data) {
@@ -19,6 +19,6 @@ export default {
 	getBoardAfterAIMove: function(data) {
 		return (getAIAction(data)).board;
 	},
-	isTerminated: GameTools.isTerminated,
-	getStateOfGame: GameTools.getStateOfGame
+	isTerminated: isTerminated,
+	getStateOfGame: getStateOfGame
 };

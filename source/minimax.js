@@ -1,5 +1,5 @@
 import Action from './action';
-import GameTools from './game';
+import * as GameTools from './game';
 
 
 export default function calculateValue(board, character, aiCharacter, depth) {

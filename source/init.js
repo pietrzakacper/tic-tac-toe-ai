@@ -1,6 +1,6 @@
 import valid from './validation';
 
-export default function initialization(data, target){
+export default function initialization(data, target) {
 	for (let key in valid) {
 		if (data.hasOwnProperty(key)) {
 			target[key] = valid[key](data);
