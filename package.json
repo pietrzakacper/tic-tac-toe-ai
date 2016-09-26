@@ -1,0 +1,38 @@
+{
+  "name": "tic-tac-toe-ai",
+  "version": "1.0.0",
+  "description": "Simple library based on Minimax algorithm that provides useful API in developing tic-tac-toe games.",
+  "main": "",
+  "scripts": {
+    "test": "tape es5/tests/*.test.js | node_modules/.bin/tap-spec",
+    "monitor": "nodemon -x 'node_modules/.bin/tape es5/tests/*.test.js | node_modules/.bin/tap-spec'"
+  },
+  "author": "Kacper Pietrzak",
+  "license": "ISC",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.14.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "eslint": "^3.4.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-eslint": "^3.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pietrzakacper/tic-tac-toe-ai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pietrzakacper/tic-tac-toe-ai/issues"
+  },
+  "homepage": "https://github.com/pietrzakacper/tic-tac-toe-ai#readme"
+}

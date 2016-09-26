@@ -1,6 +1,3 @@
 node_modules/
-gulpfile.js
-package.json
-.babelrc
-.eslintrc.json
 **/*.html
+es5/
