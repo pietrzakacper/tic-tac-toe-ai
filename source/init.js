@@ -1,6 +1,6 @@
 import valid from './validation';
 
-const initialization = function(data, target) {
+const initialization = (data, target) =>{
 	for (let key in valid) {
 		if (data.hasOwnProperty(key)) {
 			target[key] = valid[key](data);

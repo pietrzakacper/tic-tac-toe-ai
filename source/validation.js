@@ -2,25 +2,49 @@ import GameTools from './game';
 
 const validation = (function() {
 
-	function gameCharacter(character, name) {
+	function gameCharacter(character, nameForError) {
 		character = character.toLowerCase();
 
-		if (character !== 'x' && character !== 'o') {
-			throw new Error('AI ERROR: ' + character + ' is not valid ' + name + ' character!');
-		}
+		validBeingInvalidCharacter(character, nameForError);
+
 		return character;
 	}
 
 	function playerCharacter(character, aiCharacter) {
 		const afterValid = gameCharacter(character, 'ai');
 
-		if (afterValid === aiCharacter) {
-			throw new Error('AI ERROR: Player character ' + character + ' cannot be the same as ai character ' + aiCharacter + '!');
-		}
+		validCharactersBeingSame(playerCharacter,aiCharacter);
+
 		return afterValid;
 	}
 
 	function board(board, startingCharacter, aiCharacter) {
+
+		validBoardStructure(board);
+
+		const boardWithValidatedStructure = getLowerCasedArray(board);
+
+		validInvalidCharactersPresenceOnBoard(boardWithValidatedStructure);
+
+		validBoardGameState(boardWithValidatedStructure, aiCharacter,startingCharacter);
+
+		return board;
+	}
+
+
+	function validBeingInvalidCharacter(character, nameForError){
+		if (character !== 'x' && character !== 'o') {
+			throw new Error('AI ERROR: ' + character + ' is not valid ' + nameForError + ' character!');
+		}
+	}
+
+	function validCharactersBeingSame(playerCharacter,aiCharacter){
+		if (playerCharacter === aiCharacter) {
+			throw new Error('AI ERROR: Player character ' + character + ' cannot be the same as ai character ' + aiCharacter + '!');
+		}
+	}
+
+	function validBoardStructure(board){
 		if (!Array.isArray(board)) {
 			throw new Error('AI ERROR: passed board argument is not type of array');
 		}
@@ -28,14 +52,18 @@ const validation = (function() {
 		if (board.length !== 9) {
 			throw new Error('AI ERROR: length of board array is not valid, expected value is 9, given value\'s length is ' + board.length);
 		}
+	}
 
-		board.forEach(function(value, index) {
-			board[index] = value.toLowerCase();
+	function getLowerCasedArray(arr) {
+		const resultArray = [];
+		arr.forEach(function(value) {
+			resultArray.push(value.toLowerCase());
 		});
 
-		if (containsInvalidCharacters(board)) {
-			throw new Error('AI ERROR: board array contains invalid character !');
-		}
+		return resultArray;
+	}
+
+	function validBoardGameState(board, aiCharacter, startingCharacter) {
 		const aiMoves = countOccurences(board, aiCharacter);
 		const playerMoves = countOccurences(board, (aiCharacter === 'o') ? 'x' : 'o');
 
@@ -53,19 +81,14 @@ const validation = (function() {
 			throw new Error('AI ERROR: Given board represents terminated game!');
 		}
 
-		return board;
 	}
 
-	function containsInvalidCharacters(board) {
-		let contains = false;
-
+	function validInvalidCharactersPresenceOnBoard(board) {
 		board.forEach(function(value) {
 			if (value !== 'e' && value !== 'x' && value !== 'o') {
-				contains = true;
+				throw new Error('AI ERROR: board array contains invalid character !');
 			}
 		});
-
-		return contains;
 	}
 
 	function countOccurences(board, character) {

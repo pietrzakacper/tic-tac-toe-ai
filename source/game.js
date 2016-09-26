@@ -1,25 +1,42 @@
 const GameTools = (function() {
 
 	function isTerminated(board) {
-		return (getStateOfGame(board) === 'not-end') ? false : true;
+		return getStateOfGame(board) === 'not-end' ? false : true;
 	}
 
 	function getStateOfGame(board) {
+
+		const supposedChampion = whichIfAnyPlayerWon(board);
+
+		if (supposedChampion != 'none') {
+			return supposedChampion + '-won';
+		}
+
+		if (isDraw(board)) {
+			return 'draw';
+		}
+
+		return 'not-end';
+	}
+
+	function whichIfAnyPlayerWon(board) {
 		const characters = ['x', 'o'];
-		//check if one of players won
+
 		for (let i = 0; i < characters.length; ++i) {
 			if (hasWon(characters[i], board)) {
-				return characters[i] + '-won';
+				return characters[i];
 			}
 		}
-		//check if there are stil empty fields left
+		return 'none';
+	}
+
+	function isDraw(board) {
 		for (let i = 0; i < board.length; ++i) {
 			if (board[i] === 'e') {
-				return 'not-end';
+				return false;
 			}
 		}
-		//if not, it must be a draw
-		return 'draw';
+		return true;
 	}
 
 	function getGameScore(msg, aiCharacter, depth) {
@@ -44,27 +61,35 @@ const GameTools = (function() {
 	}
 
 	function hasWon(char, board) {
-		//check columns
+
+		if (isColumnWin(char, board) || isRowWin(char, board) || isDiagonalWin(char, board)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	function isColumnWin(char, board) {
 		for (let i = 0; i < 3; ++i) {
 			if (char === board[i] && char === board[i + 3] && char === board[i + 6]) {
 				return true;
 			}
 		}
+		return false;
+	}
 
-		//check rows
+	function isRowWin(char, board) {
 		for (let i = 0; i <= 6; i += 3) {
 			if (char === board[i] && char === board[i + 1] && char === board[i + 2]) {
 				return true;
 			}
 		}
-
-		//check diagonals
-		if ((char === board[0] && char === board[4] && char == board[8]) ||
-			(char === board[2] && char === board[4] && char == board[6])) {
-			return true;
-		}
-
 		return false;
+	}
+
+	function isDiagonalWin(char, board) {
+		return char === board[0] && char === board[4] && char == board[8] ||
+						char === board[2] && char === board[4] && char == board[6];
 	}
 
 	function getBoardAfterSimulatedMove(board, pos, char) {

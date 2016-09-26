@@ -16,14 +16,14 @@ const miniMax = (function() {
 
 		const actions = [];
 
-		GameTools.getAllMoves(board).forEach(function(move) {
+		GameTools.getAllMoves(board).forEach(move=>{
 			const action = new Action(move);
 			action.board = GameTools.getBoardAfterSimulatedMove(board, move, character);
 			action.score = calculateValue(action.board, character === 'x' ? 'o' : 'x', aiCharacter, depth + 1).score;
 			actions.push(action);
 		});
 
-		//sort actions depending on which player MAX or MIN is making move
+		//sort actions depending on which player (MAX or MIN) is making move
 		actions.sort(character === aiCharacter ? ACTION_ASCENDING : ACTION_DESCENDING);
 
 		//return best action

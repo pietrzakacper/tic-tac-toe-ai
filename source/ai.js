@@ -5,7 +5,9 @@ import GameTools from './game';
 const AI =(function() {
 	function getAIAction(data) {
 		const checkedData = {};
+
 		init(data, checkedData);
+
 		return minimax(checkedData.board, checkedData.aiCharacter, checkedData.aiCharacter, 0);
 	}
 
