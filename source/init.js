@@ -1,19 +1,11 @@
-var AI = (function(module) {
-	var valid = module.Validation;
+var valid = require('./validation.js');
 
-	module.initialization = function(data, target) {
-		for (var key in valid) {
-			if (data.hasOwnProperty(key)) {
-				if (!(target[key] = valid[key](data))) {
-					console.log('AI: Initialization aborted: ' + key + ' initialization error!');
-					return false;
-				}
-			} else {
-				console.log('AI ERROR: Missing property : "' + key + '" in passed data object');
-			}
+exports.initialization = function(data, target) {
+	for (var key in valid) {
+		if (data.hasOwnProperty(key)) {
+			target[key] = valid[key](data);
+		} else {
+			throw new Error('AI ERROR: Missing property : "' + key + '" in passed data object');
 		}
-		return true;
-	};
-
-	return module;
-})(AI || {});
+	}
+};

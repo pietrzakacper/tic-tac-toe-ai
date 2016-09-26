@@ -1,24 +1,22 @@
-var AI = (function(module) {
-	var init = module.initialization;
-	var minimax = module.miniMax.calculateValue;
+var init = require('./init.js').initialization;
+var minimax = require('./minimax.js').calculateValue;
+var tools = require('./game.js');
 
+exports.AI = (function() {
 	function getAIAction(data) {
 		var checkedData = {};
-		if (!init(data, checkedData)) {
-			console.log('AI: Action cannot be returned: invalid data passed to function!');
-			return;
-		}
+		init(data, checkedData);
 		return minimax(checkedData.board, checkedData.aiCharacter, checkedData.aiCharacter, 0);
 	}
 
 	return {
-		getAIMove: function(data){
+		getAIMove: function(data) {
 			return (getAIAction(data)).move;
 		},
-		getBoardAfterAIMove: function(data){
+		getBoardAfterAIMove: function(data) {
 			return (getAIAction(data)).board;
 		},
-		isTerminated: module.GameTools.isTerminated,
-		getStateOfGame: module.GameTools.getStateOfGame
+		isTerminated: tools.isTerminated,
+		getStateOfGame: tools.getStateOfGame
 	};
-})(AI || {});
+})();
