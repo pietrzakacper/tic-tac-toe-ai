@@ -1,10 +1,10 @@
-var init = require('./init.js').initialization;
-var minimax = require('./minimax.js').calculateValue;
-var tools = require('./game.js');
+import init from './init';
+import minimax from './minimax';
+import GameTools from './game';
 
-exports.AI = (function() {
+const AI =(function() {
 	function getAIAction(data) {
-		var checkedData = {};
+		const checkedData = {};
 		init(data, checkedData);
 		return minimax(checkedData.board, checkedData.aiCharacter, checkedData.aiCharacter, 0);
 	}
@@ -16,7 +16,9 @@ exports.AI = (function() {
 		getBoardAfterAIMove: function(data) {
 			return (getAIAction(data)).board;
 		},
-		isTerminated: tools.isTerminated,
-		getStateOfGame: tools.getStateOfGame
+		isTerminated: GameTools.isTerminated,
+		getStateOfGame: GameTools.getStateOfGame
 	};
 })();
+
+export default AI;

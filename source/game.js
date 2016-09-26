@@ -1,19 +1,19 @@
-module.exports = (function() {
+const GameTools = (function() {
 
 	function isTerminated(board) {
 		return (getStateOfGame(board) === 'not-end') ? false : true;
 	}
 
 	function getStateOfGame(board) {
-		var characters = ['x', 'o'];
+		const characters = ['x', 'o'];
 		//check if one of players won
-		for (var i = 0; i < 2; ++i) {
+		for (let i = 0; i < characters.length; ++i) {
 			if (hasWon(characters[i], board)) {
 				return characters[i] + '-won';
 			}
 		}
 		//check if there are stil empty fields left
-		for (var i = 0; i < 9; ++i) {
+		for (let i = 0; i < board.length; ++i) {
 			if (board[i] === 'e') {
 				return 'not-end';
 			}
@@ -32,7 +32,7 @@ module.exports = (function() {
 	}
 
 	function getAllMoves(board) {
-		var possibleMoves = [];
+		const possibleMoves = [];
 
 		board.forEach(function(value, index) {
 			if (value === 'e') {
@@ -45,14 +45,14 @@ module.exports = (function() {
 
 	function hasWon(char, board) {
 		//check columns
-		for (var i = 0; i < 3; ++i) {
+		for (let i = 0; i < 3; ++i) {
 			if (char === board[i] && char === board[i + 3] && char === board[i + 6]) {
 				return true;
 			}
 		}
 
 		//check rows
-		for (var i = 0; i <= 6; i += 3) {
+		for (let i = 0; i <= 6; i += 3) {
 			if (char === board[i] && char === board[i + 1] && char === board[i + 2]) {
 				return true;
 			}
@@ -68,7 +68,7 @@ module.exports = (function() {
 	}
 
 	function getBoardAfterSimulatedMove(board, pos, char) {
-		var newBoard = board.slice();
+		const newBoard = board.slice();
 		newBoard[pos] = char;
 		return newBoard;
 	}
@@ -81,3 +81,5 @@ module.exports = (function() {
 		getBoardAfterSimulatedMove: getBoardAfterSimulatedMove
 	};
 })();
+
+export default GameTools;

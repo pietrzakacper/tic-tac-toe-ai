@@ -1,7 +1,7 @@
-var valid = require('./validation.js');
+import valid from './validation';
 
-exports.initialization = function(data, target) {
-	for (var key in valid) {
+const initialization = function(data, target) {
+	for (let key in valid) {
 		if (data.hasOwnProperty(key)) {
 			target[key] = valid[key](data);
 		} else {
@@ -9,3 +9,5 @@ exports.initialization = function(data, target) {
 		}
 	}
 };
+
+export default initialization;

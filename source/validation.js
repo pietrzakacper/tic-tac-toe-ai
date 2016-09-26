@@ -1,5 +1,6 @@
-var tools = require('./game.js');
-module.exports = (function() {
+import GameTools from './game';
+
+const validation = (function() {
 
 	function gameCharacter(character, name) {
 		character = character.toLowerCase();
@@ -11,7 +12,7 @@ module.exports = (function() {
 	}
 
 	function playerCharacter(character, aiCharacter) {
-		var afterValid = gameCharacter(character, 'ai');
+		const afterValid = gameCharacter(character, 'ai');
 
 		if (afterValid === aiCharacter) {
 			throw new Error('AI ERROR: Player character ' + character + ' cannot be the same as ai character ' + aiCharacter + '!');
@@ -35,8 +36,8 @@ module.exports = (function() {
 		if (containsInvalidCharacters(board)) {
 			throw new Error('AI ERROR: board array contains invalid character !');
 		}
-		var aiMoves = countOccurences(board, aiCharacter);
-		var playerMoves = countOccurences(board, (aiCharacter === 'o') ? 'x' : 'o');
+		const aiMoves = countOccurences(board, aiCharacter);
+		const playerMoves = countOccurences(board, (aiCharacter === 'o') ? 'x' : 'o');
 
 		if (aiMoves > playerMoves || (aiMoves === playerMoves && startingCharacter !== aiCharacter)) {
 			throw new Error('AI ERROR: It is not ai\'s turn!');
@@ -48,7 +49,7 @@ module.exports = (function() {
 			throw new Error('AI ERROR: Given board contains too few player\' moves');
 		}
 
-		if (tools.isTerminated(board)) {
+		if (GameTools.isTerminated(board)) {
 			throw new Error('AI ERROR: Given board represents terminated game!');
 		}
 
@@ -56,7 +57,7 @@ module.exports = (function() {
 	}
 
 	function containsInvalidCharacters(board) {
-		var contains = false;
+		let contains = false;
 
 		board.forEach(function(value) {
 			if (value !== 'e' && value !== 'x' && value !== 'o') {
@@ -89,3 +90,5 @@ module.exports = (function() {
 	};
 
 })();
+
+export default validation;
