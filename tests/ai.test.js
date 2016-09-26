@@ -1,8 +1,8 @@
-var test = require('tape').test;
-var AI = require('../source/ai.js').AI;
+const test = require('tape').test;
+import AI from '../source/ai';
 
 test('The getAIMove method', function(t) {
-	var data = {
+	let data = {
 		aiCharacter: 'x',
 		playerCharacter: 'o',
 		startingCharacter: 'x',
@@ -12,8 +12,8 @@ test('The getAIMove method', function(t) {
 		]
 	};
 
-	var actual = AI.getAIMove(data);
-	var expected = 6;
+	let actual = AI.getAIMove(data);
+	let expected = 6;
 	t.equal(actual, expected, 'should choose finishing move over blocking move');
 
 	data = {
@@ -80,7 +80,7 @@ test('The getAIMove method', function(t) {
 
 
 test('The getBoardAfterAIMove method', function(t) {
-	var data = {
+	let data = {
 		aiCharacter: 'x',
 		playerCharacter: 'o',
 		startingCharacter: 'x',
@@ -90,8 +90,8 @@ test('The getBoardAfterAIMove method', function(t) {
 		]
 	};
 
-	var actual = Array.isArray(AI.getBoardAfterAIMove(data));
-	var expected = true;
+	let actual = Array.isArray(AI.getBoardAfterAIMove(data));
+	let expected = true;
 
 	t.equal(actual, expected, 'should return Array');
 

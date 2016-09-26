@@ -1,14 +1,14 @@
-var test = require('tape').test;
-var tools = require('../source/game.js');
+const test = require('tape').test;
+import GameTools from '../source/game';
 
 test('The getStateOfGame method', function(t) {
-	var board = ['e', 'e', 'e',
+	let board = ['e', 'e', 'e',
 		'e', 'e', 'e',
 		'e', 'e', 'e'
 	];
 
-	var actual = tools.getStateOfGame(board);
-	var expected = 'not-end';
+	let actual = GameTools.getStateOfGame(board);
+	let expected = 'not-end';
 
 	t.equals(actual, expected, 'should return "not-end" for empty board');
 
@@ -17,7 +17,7 @@ test('The getStateOfGame method', function(t) {
 		'e', 'e', 'o'
 	];
 
-	actual = tools.getStateOfGame(board);
+	actual = GameTools.getStateOfGame(board);
 	expected = 'o-won';
 
 	t.equals(actual, expected, 'should return "o-won" for three Os on diagonal');
@@ -27,7 +27,7 @@ test('The getStateOfGame method', function(t) {
 		'e', 'e', 'o'
 	];
 
-	actual = tools.getStateOfGame(board);
+	actual = GameTools.getStateOfGame(board);
 	expected = 'x-won';
 
 	t.equals(actual, expected, 'should return "x-won" for three Xs in a row');
@@ -37,7 +37,7 @@ test('The getStateOfGame method', function(t) {
 		'x', 'e', 'o'
 	];
 
-	actual = tools.getStateOfGame(board);
+	actual = GameTools.getStateOfGame(board);
 	expected = 'x-won';
 
 	t.equals(actual, expected, 'should return "x-won" for three Xs in one column');
@@ -47,7 +47,7 @@ test('The getStateOfGame method', function(t) {
 		'o', 'x', 'o'
 	];
 
-	actual = tools.getStateOfGame(board);
+	actual = GameTools.getStateOfGame(board);
 	expected = 'draw';
 
 	t.equals(actual, expected, 'should return "draw" for filled board');
