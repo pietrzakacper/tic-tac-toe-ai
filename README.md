@@ -52,7 +52,7 @@ if(currentGameState === `${data.aiCharacter}-won`){
 For now, those are all of the features that can help you in developing your tic tac toe game.
 
 ## Instalation
-If you want to use this library in browser environment, simply download minified script from [here](https://raw.githubusercontent.com/pietrzakacper/tic-tac-toe-ai/master/distribution/tic-tac-toe-ai-min.js) by clicking on link with **right mouse button** and choosing **Save link as...**, put it in your project's scripts folder and link it in your HTML file above your scripts. Now you can make use of every function mentioned above by calling them on globals object named **AI**, as shown in the examples.
+If you want to use this library in browser environment, simply download minified script from [here](https://raw.githubusercontent.com/pietrzakacper/tic-tac-toe-ai/master/distribution/tic-tac-toe-ai-min.js) by clicking on link with **right mouse button** and choosing **Save link as...**, put it in your project's scripts folder and link it in your HTML file above your scripts. Now you can make use of every function mentioned above by calling them on global object named **AI**, as shown in the examples.
 
 ## License
 
