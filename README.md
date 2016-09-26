@@ -10,7 +10,7 @@ Simple library based on [Minimax](https://en.wikipedia.org/wiki/Minimax) algorit
 This is standard data format, used to exchange information about current game state.
 Board property is one-dimensional array which consists of field characters: *[ 'x', 'o', 'e']*. **'e'** stands for empty field. 0th index of board array coresponds to left-top field, 1st index corresponds to center-top field and so on...
 ``` javascript
-var data = {
+const data = {
   	aiCharacter: 'o',
 	playerCharacter: 'x',
 	startingCharacter: 'x',
@@ -36,7 +36,7 @@ Whenever it is needed to check  whether game is finished, ```isTerminated(board)
 ```javascript
 AI.isTerminated(data.board); //returns false
 
-var newBoard = ['x','e','o',
+const newBoard = ['x','e','o',
                 'e','o','x',
                 'o','x','o' ];
 
@@ -44,8 +44,8 @@ AI.isTerminated(newBoard); //returns true
 ```
 Another way to check whether game is finished, is calling ```getStateOfGame(board)```. This time, more specific result is provided. This function can return one, out of four values: **'x-won'**, **'o-won'**, **'draw'** and **'not-end'**.
 ```javascript
-var currentGameState = AI.getStateOfGame(data.board);
-if(currentGameState === data.aiCharacter + '-won'){
+const  currentGameState = AI.getStateOfGame(data.board);
+if(currentGameState === `${data.aiCharacter}-won`){
     //show 'YOU LOST!' on screen
 }
 ```
