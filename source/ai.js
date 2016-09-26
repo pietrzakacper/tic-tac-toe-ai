@@ -2,25 +2,23 @@ import init from './init';
 import minimax from './minimax';
 import GameTools from './game';
 
-const AI =(function() {
-	function getAIAction(data) {
-		const checkedData = {};
 
-		init(data, checkedData);
+function getAIAction(data) {
+	const checkedData = {};
 
-		return minimax(checkedData.board, checkedData.aiCharacter, checkedData.aiCharacter, 0);
-	}
+	init(data, checkedData);
 
-	return {
-		getAIMove: function(data) {
-			return (getAIAction(data)).move;
-		},
-		getBoardAfterAIMove: function(data) {
-			return (getAIAction(data)).board;
-		},
-		isTerminated: GameTools.isTerminated,
-		getStateOfGame: GameTools.getStateOfGame
-	};
-})();
+	return minimax(checkedData.board, checkedData.aiCharacter, checkedData.aiCharacter, 0);
+}
 
-export default AI;
+
+export default {
+	getAIMove: function(data) {
+		return (getAIAction(data)).move;
+	},
+	getBoardAfterAIMove: function(data) {
+		return (getAIAction(data)).board;
+	},
+	isTerminated: GameTools.isTerminated,
+	getStateOfGame: GameTools.getStateOfGame
+};
