@@ -15,8 +15,8 @@ const data = {
 	playerCharacter: 'x',
 	startingCharacter: 'x',
 	board: ['e','e','o',
-			'x','e','e',
-			'e','x','e']
+		'x','e','e',
+		'e','x','e']
 };
 ```
 The most basic usage of this library is getting the best move, based on current board state. This can be achieved be simply calling ```getAIMove(data)```. This function returns index of board array which reporesents AI's move.
